@@ -21,6 +21,35 @@ document.addEventListener('DOMContentLoaded', function() {
         const text = serviceTypes[index] || 'サービス';
         img.src = `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'><rect width='300' height='200' fill='${color}'/><text x='150' y='100' font-family='Arial' font-size='18' fill='white' text-anchor='middle'>${text}</text></svg>`;
     });
+    
+    // ハンバーガーメニューの動作
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const hamburgerIcon = document.querySelector('.hamburger-icon');
+    const nav = document.querySelector('nav');
+    
+    if (hamburgerMenu && nav) {
+        hamburgerMenu.addEventListener('click', function() {
+            hamburgerIcon.classList.toggle('open');
+            nav.classList.toggle('active');
+        });
+        
+        // メニュー項目をクリックしたらメニューを閉じる
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                hamburgerIcon.classList.remove('open');
+                nav.classList.remove('active');
+            });
+        });
+        
+        // 画面外クリックでメニューを閉じる
+        document.addEventListener('click', function(event) {
+            if (!nav.contains(event.target) && !hamburgerMenu.contains(event.target) && nav.classList.contains('active')) {
+                hamburgerIcon.classList.remove('open');
+                nav.classList.remove('active');
+            }
+        });
+    }
 });
 
 // Smooth scrolling for anchor links
